@@ -1,0 +1,26 @@
+[package]
+name = "bevy_stl"
+version = "0.1.0"
+authors = ["Niklas Cathor <niklas.cathor@gmx.de>"]
+edition = "2018"
+license = "MIT"
+description = "STL loader for bevy, based on stl_io"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy_app = "0.4"
+bevy_asset = "0.4"
+bevy_render = "0.4"
+bevy_utils = "0.4"
+anyhow = "1.0"
+thiserror = "1.0"
+stl_io = "0.5.2"
+
+[dev-dependencies]
+bevy = "0.4"
+
+[[example]]
+name = "spinning_disc"
+path = "examples/spinning_disc.rs"
