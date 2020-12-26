@@ -1,5 +1,9 @@
 # bevy_stl
 
+[![Crate version](https://img.shields.io/crates/v/bevy_stl?style=flat-square)](https://crates.io/crates/bevy_stl/)
+
+![Crate license](https://img.shields.io/crates/l/bevy_stl?style=flat-square)
+
 A [STL](https://en.wikipedia.org/wiki/STL_(file_format)) loader for [bevy](https://bevyengine.org/).
 
 STL is a very simple format, which supports only triangular geometry (positions + normals), without any color / uv / texture information.
