@@ -21,6 +21,13 @@ stl_io = "0.5.2"
 [dev-dependencies]
 bevy = "0.4"
 
+[features]
+default = []
+
+# Along with the triangle mesh, generate an additional wireframe mesh (a PrimitiveTopology::LineList).
+# The wireframe mesh can be accessed by `asset_server.load("my-model.stl#wireframe")`.
+wireframe = []
+
 [[example]]
 name = "spinning_disc"
 path = "examples/spinning_disc.rs"

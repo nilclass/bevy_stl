@@ -40,3 +40,25 @@ fn setup(commands: &mut Commands, asset_server: Res<AssetServer>, mut materials:
 ```
 
 You can find a more complete example in `examples/spinning_disc.rs` - use `cargo run --example spinning_disc --release` to run it.
+
+## Optional Features
+
+### Wireframe
+
+By default `bevy_stl` produces a triangle mesh (`PrimitiveTopology::TriangleList`).
+When the **optional** `wireframe` feature is enabled, an additional line mesh is produced (`PrimitiveTopology::LineList`).
+
+The feature can be enabled via Cargo.toml:
+```
+[dependencies.bevy_stl]
+features = ["wireframe"]
+```
+
+When enabled, the mesh can be accessed by appending the wireframe label to the path passed to the asset loader:
+```
+  // This returns the triangle mesh (the default):
+  asset_server.load("disc.stl")
+
+  // This returns the wireframe mesh:
+  asset_server.load("disc.stl#wireframe")
+```

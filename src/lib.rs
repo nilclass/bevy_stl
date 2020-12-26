@@ -43,10 +43,20 @@ enum StlError {
 }
 
 async fn load_stl<'a, 'b>(bytes: &'a [u8], load_context: &'a mut LoadContext<'b>) -> Result<(), StlError> {
-    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
-
     let mut reader = Cursor::new(bytes);
     let stl = stl_io::read_stl(&mut reader)?;
+
+    load_context.set_default_asset(LoadedAsset::new(stl_to_triangle_mesh(&stl)));
+
+    #[cfg(feature = "wireframe")]
+    load_context.set_labeled_asset("wireframe", LoadedAsset::new(stl_to_wireframe_mesh(&stl)));
+
+    Ok(())
+}
+
+fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
+    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
+
     let vertex_count = stl.faces.len() * 3;
 
     let mut positions = Vec::with_capacity(vertex_count);
@@ -69,6 +79,29 @@ async fn load_stl<'a, 'b>(bytes: &'a [u8], load_context: &'a mut LoadContext<'b>
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float3(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
-    load_context.set_default_asset(LoadedAsset::new(mesh));
-    Ok(())
+    mesh
+}
+
+#[cfg(feature = "wireframe")]
+fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
+    let mut mesh = Mesh::new(PrimitiveTopology::LineList);
+
+    let positions = stl.vertices.iter().map(|v| [v[0], v[1], v[2]]).collect();
+    let mut indices = Vec::with_capacity(stl.faces.len() * 3);
+    let normals = vec![[1.0, 0.0, 0.0]; stl.vertices.len()];
+    let uvs = vec![[0.0, 0.0, 0.0]; stl.vertices.len()];
+
+    for face in &stl.faces {
+        for j in 0..3 {
+            indices.push(face.vertices[j] as u32);
+            indices.push(face.vertices[(j + 1) % 3] as u32);
+        }
+    }
+
+    mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, VertexAttributeValues::Float3(positions));
+    mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, VertexAttributeValues::Float3(normals));
+    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float3(uvs));
+    mesh.set_indices(Some(Indices::U32(indices)));
+
+    mesh
 }
