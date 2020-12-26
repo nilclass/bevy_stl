@@ -5,6 +5,7 @@ authors = ["Niklas Cathor <niklas.cathor@gmx.de>"]
 edition = "2018"
 license = "MIT"
 description = "STL loader for bevy, based on stl_io"
+repository = "https://github.com/nilclass/bevy_stl"
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
