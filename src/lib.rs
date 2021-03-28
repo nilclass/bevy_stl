@@ -1,14 +1,14 @@
 use anyhow::Result;
-use thiserror::Error;
 use std::io::Cursor;
+use thiserror::Error;
 
-use bevy_asset::{AssetLoader, LoadContext, LoadedAsset, AddAsset};
+use bevy_app::prelude::*;
+use bevy_asset::{AddAsset, AssetLoader, LoadContext, LoadedAsset};
 use bevy_render::{
+    mesh::{Indices, Mesh, VertexAttributeValues},
     pipeline::PrimitiveTopology,
-    mesh::{Mesh, VertexAttributeValues, Indices},
 };
 use bevy_utils::BoxedFuture;
-use bevy_app::prelude::*;
 
 pub struct StlPlugin;
 
@@ -25,7 +25,7 @@ impl AssetLoader for StlLoader {
     fn load<'a>(
         &'a self,
         bytes: &'a [u8],
-        load_context: &'a mut LoadContext
+        load_context: &'a mut LoadContext,
     ) -> BoxedFuture<'a, Result<(), anyhow::Error>> {
         Box::pin(async move { Ok(load_stl(bytes, load_context).await?) })
     }
@@ -42,7 +42,10 @@ enum StlError {
     Io(#[from] std::io::Error),
 }
 
-async fn load_stl<'a, 'b>(bytes: &'a [u8], load_context: &'a mut LoadContext<'b>) -> Result<(), StlError> {
+async fn load_stl<'a, 'b>(
+    bytes: &'a [u8],
+    load_context: &'a mut LoadContext<'b>,
+) -> Result<(), StlError> {
     let mut reader = Cursor::new(bytes);
     let stl = stl_io::read_stl(&mut reader)?;
 
@@ -74,8 +77,14 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
 
     let uvs = vec![[0.0, 0.0, 0.0]; vertex_count];
 
-    mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, VertexAttributeValues::Float3(positions));
-    mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, VertexAttributeValues::Float3(normals));
+    mesh.set_attribute(
+        Mesh::ATTRIBUTE_POSITION,
+        VertexAttributeValues::Float3(positions),
+    );
+    mesh.set_attribute(
+        Mesh::ATTRIBUTE_NORMAL,
+        VertexAttributeValues::Float3(normals),
+    );
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float3(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
@@ -98,8 +107,14 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         }
     }
 
-    mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, VertexAttributeValues::Float3(positions));
-    mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, VertexAttributeValues::Float3(normals));
+    mesh.set_attribute(
+        Mesh::ATTRIBUTE_POSITION,
+        VertexAttributeValues::Float3(positions),
+    );
+    mesh.set_attribute(
+        Mesh::ATTRIBUTE_NORMAL,
+        VertexAttributeValues::Float3(normals),
+    );
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float3(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
