@@ -20,7 +20,6 @@ thiserror = "1.0"
 stl_io = "0.5.2"
 
 [dev-dependencies]
-#bevy = { git = "https://github.com/bevyengine/bevy", branch = "main" }
 bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = [
     "render",
     "bevy_wgpu",
