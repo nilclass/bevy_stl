@@ -34,7 +34,11 @@ fn setup(
         })
         .insert(Disc { angle: 0.0 });
     commands.spawn_bundle(LightBundle {
-        transform: Transform::from_translation(Vec3::new(0.0, 100.0, 100.0)),
+        transform: Transform::from_xyz(30.0, 0.0, 20.0),
+        light: Light {
+            range: 40.0,
+            ..Default::default()
+        },
         ..Default::default()
     });
     commands.spawn_bundle(PerspectiveCameraBundle {
