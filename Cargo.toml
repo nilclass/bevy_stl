@@ -11,16 +11,16 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy_app = { git = "https://github.com/bevyengine/bevy", branch = "main" }
-bevy_asset = { git = "https://github.com/bevyengine/bevy", branch = "main" }
-bevy_render = { git = "https://github.com/bevyengine/bevy", branch = "main" }
-bevy_utils = { git = "https://github.com/bevyengine/bevy", branch = "main" }
+bevy_app = "0.5"
+bevy_asset = "0.5"
+bevy_render = "0.5"
+bevy_utils = "0.5"
 anyhow = "1.0"
 thiserror = "1.0"
 stl_io = "0.5.2"
 
 [dev-dependencies]
-bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = [
+bevy = { version = "0.5", default-features = false, features = [
     "render",
     "bevy_wgpu",
     "bevy_winit",
