@@ -33,9 +33,9 @@ fn setup(
             ..Default::default()
         })
         .insert(Disc { angle: 0.0 });
-    commands.spawn_bundle(LightBundle {
+    commands.spawn_bundle(PointLightBundle {
         transform: Transform::from_xyz(30.0, 0.0, 20.0),
-        light: Light {
+        point_light: PointLight {
             range: 40.0,
             ..Default::default()
         },
