@@ -14,11 +14,11 @@ readme = "README.md"
 anyhow = "1.0"
 thiserror = "1.0"
 stl_io = "0.5.2"
-bevy_app = { git = "https://github.com/bevyengine//bevy" }
-bevy_asset = { git = "https://github.com/bevyengine//bevy"}
-bevy_render = { git = "https://github.com/bevyengine//bevy"}
-bevy_utils = { git = "https://github.com/bevyengine//bevy" }
-bevy_input = { git = "https://github.com/bevyengine//bevy"}
+bevy_app = { git = "https://github.com/bevyengine//bevy", rev = "9d453530fac9202691c797184ad0b220b2ea37b3" }
+bevy_asset = { git = "https://github.com/bevyengine//bevy", rev = "9d453530fac9202691c797184ad0b220b2ea37b3"}
+bevy_render = { git = "https://github.com/bevyengine//bevy", rev = "9d453530fac9202691c797184ad0b220b2ea37b3"}
+bevy_utils = { git = "https://github.com/bevyengine//bevy", rev = "9d453530fac9202691c797184ad0b220b2ea37b3" }
+bevy_input = { git = "https://github.com/bevyengine//bevy", rev = "9d453530fac9202691c797184ad0b220b2ea37b3"}
 
 
 [features]

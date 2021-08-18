@@ -12,7 +12,7 @@ use bevy_utils::BoxedFuture;
 
 pub struct StlPlugin;
 
-impl Plugin for StlPlugin {
+impl bevy_app::prelude::Plugin for StlPlugin {
     fn build(&self, app: &mut App) {
         app.init_asset_loader::<StlLoader>();
     }
