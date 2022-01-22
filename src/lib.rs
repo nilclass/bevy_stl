@@ -77,7 +77,7 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         }
     }
 
-    let uvs = vec![[0.0, 0.0, 0.0]; vertex_count];
+    let uvs = vec![[0.0, 0.0]; vertex_count];
 
     mesh.set_attribute(
         Mesh::ATTRIBUTE_POSITION,
@@ -87,7 +87,7 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         Mesh::ATTRIBUTE_NORMAL,
         VertexAttributeValues::Float32x3(normals),
     );
-    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x3(uvs));
+    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x2(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
     mesh
