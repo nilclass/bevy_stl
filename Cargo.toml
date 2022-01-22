@@ -2,25 +2,28 @@
 name = "bevy_stl"
 version = "0.3.0"
 authors = ["Niklas Cathor <niklas.cathor@gmx.de>"]
-edition = "2018"
+edition = "2021"
 license = "MIT"
 description = "STL loader for bevy, based on stl_io"
 repository = "https://github.com/nilclass/bevy_stl"
 readme = "README.md"
+resolver = "2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy_app = { git = "https://github.com/bevyengine/bevy", branch = "main"}
-bevy_asset = { git = "https://github.com/bevyengine/bevy", branch = "main"}
-bevy_render = { git = "https://github.com/bevyengine/bevy", branch = "main"}
-bevy_utils = { git = "https://github.com/bevyengine/bevy", branch = "main"}
+bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = [
+    "render",
+] }
 anyhow = "1.0"
 thiserror = "1.0"
 stl_io = "0.5.2"
 
 [dev-dependencies]
-bevy = { git = "https://github.com/bevyengine/bevy", branch = "main"}
+bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = [
+    "bevy_winit",
+    "x11",
+] }
 
 [features]
 default = []

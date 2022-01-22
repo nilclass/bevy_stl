@@ -27,7 +27,7 @@ It is supported as an output format by most CAD software.
 fn main() {
     App::build()
         .add_plugin(bevy_stl::StlPlugin)
-        .add_startup_system(setup.system())
+        .add_startup_system(setup)
         // ...
         .run();
 }

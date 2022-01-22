@@ -1,19 +1,19 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, utils::Duration};
 use bevy_stl::StlPlugin;
-use bevy_utils::Duration;
 use core::f32::consts::PI;
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(Msaa { samples: 4 })
         .add_plugins(DefaultPlugins)
         .add_plugin(StlPlugin)
         .insert_resource(SpinTimer(Timer::from_seconds(1.0 / 60.0, true)))
-        .add_startup_system(setup.system())
-        .add_system(spin_disc.system())
+        .add_startup_system(setup)
+        .add_system(spin_disc)
         .run();
 }
 
+#[derive(Component)]
 struct Disc {
     angle: f32,
 }

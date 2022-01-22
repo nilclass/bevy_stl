@@ -2,18 +2,20 @@ use anyhow::Result;
 use std::io::Cursor;
 use thiserror::Error;
 
-use bevy_app::prelude::*;
-use bevy_asset::{AddAsset, AssetLoader, LoadContext, LoadedAsset};
-use bevy_render::{
-    mesh::{Indices, Mesh, VertexAttributeValues},
-    pipeline::PrimitiveTopology,
+use bevy::{
+    asset::{AddAsset, AssetLoader, LoadContext, LoadedAsset},
+    prelude::*,
+    render::{
+        mesh::{Indices, Mesh, VertexAttributeValues},
+        render_resource::PrimitiveTopology,
+    },
+    utils::BoxedFuture,
 };
-use bevy_utils::BoxedFuture;
 
 pub struct StlPlugin;
 
 impl Plugin for StlPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         app.init_asset_loader::<StlLoader>();
     }
 }
