@@ -2,18 +2,20 @@ use anyhow::Result;
 use std::io::Cursor;
 use thiserror::Error;
 
-use bevy_app::prelude::*;
-use bevy_asset::{AddAsset, AssetLoader, LoadContext, LoadedAsset};
-use bevy_render::{
-    mesh::{Indices, Mesh, VertexAttributeValues},
-    pipeline::PrimitiveTopology,
+use bevy::{
+    asset::{AddAsset, AssetLoader, LoadContext, LoadedAsset},
+    prelude::*,
+    render::{
+        mesh::{Indices, Mesh, VertexAttributeValues},
+        render_resource::PrimitiveTopology,
+    },
+    utils::BoxedFuture,
 };
-use bevy_utils::BoxedFuture;
 
 pub struct StlPlugin;
 
 impl Plugin for StlPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         app.init_asset_loader::<StlLoader>();
     }
 }
@@ -75,7 +77,7 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         }
     }
 
-    let uvs = vec![[0.0, 0.0, 0.0]; vertex_count];
+    let uvs = vec![[0.0, 0.0]; vertex_count];
 
     mesh.set_attribute(
         Mesh::ATTRIBUTE_POSITION,
@@ -85,7 +87,7 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         Mesh::ATTRIBUTE_NORMAL,
         VertexAttributeValues::Float32x3(normals),
     );
-    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x3(uvs));
+    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x2(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
     mesh
