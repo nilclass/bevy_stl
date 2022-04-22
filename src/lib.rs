@@ -109,15 +109,15 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         }
     }
 
-    mesh.set_attribute(
+    mesh.insert_attribute(
         Mesh::ATTRIBUTE_POSITION,
-        VertexAttributeValues::Float3(positions),
+        VertexAttributeValues::Float32x3(positions),
     );
-    mesh.set_attribute(
+    mesh.insert_attribute(
         Mesh::ATTRIBUTE_NORMAL,
-        VertexAttributeValues::Float3(normals),
+        VertexAttributeValues::Float32x3(normals),
     );
-    mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float3(uvs));
+    mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x3(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
     mesh
