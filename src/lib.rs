@@ -100,7 +100,7 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
     let positions = stl.vertices.iter().map(|v| [v[0], v[1], v[2]]).collect();
     let mut indices = Vec::with_capacity(stl.faces.len() * 3);
     let normals = vec![[1.0, 0.0, 0.0]; stl.vertices.len()];
-    let uvs = vec![[0.0, 0.0, 0.0]; stl.vertices.len()];
+    let uvs = vec![[0.0, 0.0]; stl.vertices.len()];
 
     for face in &stl.faces {
         for j in 0..3 {
@@ -117,7 +117,7 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         Mesh::ATTRIBUTE_NORMAL,
         VertexAttributeValues::Float32x3(normals),
     );
-    mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x3(uvs));
+    mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x2(uvs));
     mesh.set_indices(Some(Indices::U32(indices)));
 
     mesh
