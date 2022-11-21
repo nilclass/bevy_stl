@@ -7,7 +7,7 @@ fn main() {
         .insert_resource(Msaa { samples: 4 })
         .add_plugins(DefaultPlugins)
         .add_plugin(StlPlugin)
-        .insert_resource(SpinTimer(Timer::from_seconds(1.0 / 60.0, true)))
+        .insert_resource(SpinTimer(Timer::from_seconds(1.0 / 60.0, TimerMode::Repeating)))
         .add_startup_system(setup)
         .add_system(spin_disc)
         .run();
@@ -18,6 +18,7 @@ struct Disc {
     angle: f32,
 }
 
+#[derive(Resource)]
 struct SpinTimer(Timer);
 
 fn setup(
@@ -25,15 +26,16 @@ fn setup(
     asset_server: Res<AssetServer>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    commands
-        .spawn_bundle(PbrBundle {
+    commands.spawn((
+        PbrBundle {
             mesh: asset_server.load("models/disc.stl"),
             material: materials.add(Color::rgb(0.9, 0.4, 0.3).into()),
             transform: Transform::from_rotation(Quat::from_rotation_z(0.0)),
             ..Default::default()
-        })
-        .insert(Disc { angle: 0.0 });
-    commands.spawn_bundle(PointLightBundle {
+        },
+        Disc { angle: 0.0 }
+    ));
+    commands.spawn(PointLightBundle {
         transform: Transform::from_xyz(30.0, 0.0, 20.0),
         point_light: PointLight {
             range: 40.0,
@@ -41,7 +43,7 @@ fn setup(
         },
         ..Default::default()
     });
-    commands.spawn_bundle(Camera3dBundle {
+    commands.spawn(Camera3dBundle {
         transform: Transform::from_translation(Vec3::new(0.0, -100.0, 100.0))
             .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
         ..Default::default()
