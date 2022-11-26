@@ -13,7 +13,7 @@ It is supported as an output format by most CAD software.
 ## Alternatives
 
 - by default bevy can load [glTF scenes](https://en.wikipedia.org/wiki/GlTF), which is a much better choice if you are looking for a way to load more complex models / scenes, including materials, animations, etc.
-- [bevy_obj](bevy_obj) can load [Wavefront .obj files](https://en.wikipedia.org/wiki/Wavefront_.obj_file), which can carry more information than STL (such as color, material, UV coordinates)
+- [bevy_obj](https://crates.io/crates/bevy_obj) can load [Wavefront .obj files](https://en.wikipedia.org/wiki/Wavefront_.obj_file), which can carry more information than STL (such as color, material, UV coordinates)
 
 ## Usage
 
