@@ -1,6 +1,6 @@
 [package]
 name = "bevy_stl"
-version = "0.7.0"
+version = "0.7.1"
 authors = ["Niklas Cathor <niklas.cathor@gmx.de>"]
 edition = "2021"
 license = "MIT"
