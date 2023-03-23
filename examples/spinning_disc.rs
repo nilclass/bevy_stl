@@ -4,7 +4,7 @@ use core::f32::consts::PI;
 
 fn main() {
     App::new()
-        .insert_resource(Msaa::Sample4)
+        .insert_resource(Msaa { samples: 4 })
         .add_plugins(DefaultPlugins)
         .add_plugin(StlPlugin)
         .insert_resource(SpinTimer(Timer::from_seconds(1.0 / 60.0, TimerMode::Repeating)))
