@@ -6,10 +6,10 @@ fn main() {
     App::new()
         .insert_resource(Msaa::Sample4)
         .add_plugins(DefaultPlugins)
-        .add_plugin(StlPlugin)
+        .add_plugins(StlPlugin)
         .insert_resource(SpinTimer(Timer::from_seconds(1.0 / 60.0, TimerMode::Repeating)))
-        .add_startup_system(setup)
-        .add_system(spin_disc)
+        .add_systems(Startup, setup)
+        .add_systems(Update, spin_disc)
         .run();
 }
 
