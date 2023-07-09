@@ -26,8 +26,8 @@ It is supported as an output format by most CAD software.
 ```rust
 fn main() {
     App::new()
-        .add_plugin(bevy_stl::StlPlugin)
-        .add_startup_system(setup)
+        .add_plugins(bevy_stl::StlPlugin)
+        .add_systems(Startup, setup)
         // ...
         .run();
 }
