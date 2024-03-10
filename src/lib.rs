@@ -9,6 +9,7 @@ use bevy::{
     render::{
         mesh::{Indices, Mesh, VertexAttributeValues},
         render_resource::PrimitiveTopology,
+        render_asset::RenderAssetUsages,
     },
     utils::BoxedFuture,
 };
@@ -32,7 +33,7 @@ impl AssetLoader for StlLoader {
         &'a self,
         reader: &'a mut Reader,
         _settings: &'a (),
-        _load_context: &'a mut LoadContext,
+        load_context: &'a mut LoadContext,
     ) -> BoxedFuture<'a, Result<Self::Asset, Self::Error>> {
         Box::pin(async move {
             let mut bytes = Vec::new();
@@ -62,7 +63,7 @@ enum StlError {
 }
 
 fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
-    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
+    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList, RenderAssetUsages::default());
 
     let vertex_count = stl.faces.len() * 3;
 
@@ -90,14 +91,14 @@ fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         VertexAttributeValues::Float32x3(normals),
     );
     mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x2(uvs));
-    mesh.set_indices(Some(Indices::U32(indices)));
+    mesh.insert_indices(Indices::U32(indices));
 
     mesh
 }
 
 #[cfg(feature = "wireframe")]
 fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
-    let mut mesh = Mesh::new(PrimitiveTopology::LineList);
+    let mut mesh = Mesh::new(PrimitiveTopology::LineList, RenderAssetUsages::default());
 
     let positions = stl.vertices.iter().map(|v| [v[0], v[1], v[2]]).collect();
     let mut indices = Vec::with_capacity(stl.faces.len() * 3);
@@ -120,7 +121,7 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
         VertexAttributeValues::Float32x3(normals),
     );
     mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, VertexAttributeValues::Float32x2(uvs));
-    mesh.set_indices(Some(Indices::U32(indices)));
+    mesh.insert_indices(Indices::U32(indices));
 
     mesh
 }
