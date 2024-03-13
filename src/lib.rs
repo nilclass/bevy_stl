@@ -33,6 +33,7 @@ impl AssetLoader for StlLoader {
         &'a self,
         reader: &'a mut Reader,
         _settings: &'a (),
+        #[allow(unused)]
         load_context: &'a mut LoadContext,
     ) -> BoxedFuture<'a, Result<Self::Asset, Self::Error>> {
         Box::pin(async move {
