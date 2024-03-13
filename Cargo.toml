@@ -41,3 +41,8 @@ wireframe = []
 [[example]]
 name = "spinning_disc"
 path = "examples/spinning_disc.rs"
+
+[[example]]
+name = "spinning_disc_wireframe"
+path = "examples/spinning_disc_wireframe.rs"
+required-features = ["wireframe"]
