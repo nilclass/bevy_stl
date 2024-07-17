@@ -29,7 +29,7 @@ fn setup(
     commands.spawn((
         PbrBundle {
             mesh: asset_server.load("models/disc.stl"),
-            material: materials.add(Color::rgb(0.9, 0.4, 0.3)),
+            material: materials.add(Color::srgb(0.9, 0.4, 0.3)),
             transform: Transform::from_rotation(Quat::from_rotation_z(0.0)),
             ..Default::default()
         },

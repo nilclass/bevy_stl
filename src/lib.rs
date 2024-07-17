@@ -1,17 +1,15 @@
 use anyhow::Result;
-use futures_lite::AsyncReadExt;
 use std::io::Cursor;
 use thiserror::Error;
 
 use bevy::{
-    asset::{io::Reader, AssetLoader, LoadContext},
+    asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     prelude::*,
     render::{
         mesh::{Indices, Mesh, VertexAttributeValues},
         render_resource::PrimitiveTopology,
         render_asset::RenderAssetUsages,
     },
-    utils::BoxedFuture,
 };
 
 pub struct StlPlugin;
@@ -29,26 +27,23 @@ impl AssetLoader for StlLoader {
     type Asset = Mesh;
     type Settings = ();
     type Error = StlError;
-    fn load<'a>(
+    async fn load<'a>(
         &'a self,
-        reader: &'a mut Reader,
+        reader: &'a mut Reader<'_>,
         _settings: &'a (),
-        #[allow(unused)]
-        load_context: &'a mut LoadContext,
-    ) -> BoxedFuture<'a, Result<Self::Asset, Self::Error>> {
-        Box::pin(async move {
-            let mut bytes = Vec::new();
-            reader.read_to_end(&mut bytes).await?;
-            let mut reader = Cursor::new(bytes);
-            let stl = stl_io::read_stl(&mut reader)?;
+        #[allow(unused)] load_context: &'a mut LoadContext<'_>,
+    ) -> Result<Self::Asset, Self::Error> {
+        let mut bytes = Vec::new();
+        reader.read_to_end(&mut bytes).await?;
+        let mut reader = Cursor::new(bytes);
+        let stl = stl_io::read_stl(&mut reader)?;
 
-            #[cfg(feature = "wireframe")]
-            load_context.labeled_asset_scope("wireframe".to_string(), |_load_context| {
-                stl_to_wireframe_mesh(&stl)
-            });
+        #[cfg(feature = "wireframe")]
+        load_context.labeled_asset_scope("wireframe".to_string(), |_load_context| {
+            stl_to_wireframe_mesh(&stl)
+        });
 
-            Ok(stl_to_triangle_mesh(&stl))
-        })
+        Ok(stl_to_triangle_mesh(&stl))
     }
 
     fn extensions(&self) -> &[&str] {
