@@ -1,4 +1,3 @@
-use anyhow::Result;
 use std::io::Cursor;
 use thiserror::Error;
 

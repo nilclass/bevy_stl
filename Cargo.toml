@@ -16,10 +16,8 @@ bevy = { version = "0.14", default-features = false, features = [
     "bevy_asset",
     "bevy_render",
 ] }
-anyhow = "1.0"
 thiserror = "1.0"
 stl_io = "0.7.0"
-futures-lite = "2.0.1"
 
 [dev-dependencies]
 bevy = { version = "0.14", default-features = false, features = [
