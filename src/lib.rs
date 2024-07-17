@@ -7,8 +7,8 @@ use bevy::{
     prelude::*,
     render::{
         mesh::{Indices, Mesh, VertexAttributeValues},
-        render_resource::PrimitiveTopology,
         render_asset::RenderAssetUsages,
+        render_resource::PrimitiveTopology,
     },
 };
 
@@ -59,7 +59,10 @@ enum StlError {
 }
 
 fn stl_to_triangle_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
-    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList, RenderAssetUsages::default());
+    let mut mesh = Mesh::new(
+        PrimitiveTopology::TriangleList,
+        RenderAssetUsages::default(),
+    );
 
     let vertex_count = stl.faces.len() * 3;
 
