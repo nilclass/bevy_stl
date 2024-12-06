@@ -44,6 +44,7 @@ fn setup(
     commands.spawn((
         Transform::from_translation(Vec3::new(0.0, -100.0, 100.0))
             .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
+        Camera3d::default(),
         Msaa::Sample4,
     )
     );
