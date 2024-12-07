@@ -46,8 +46,7 @@ fn setup(
             .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
         Camera3d::default(),
         Msaa::Sample4,
-    )
-    );
+    ));
 }
 
 fn spin_disc(

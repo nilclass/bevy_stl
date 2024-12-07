@@ -27,11 +27,10 @@ impl AssetLoader for StlLoader {
     type Settings = ();
     type Error = StlError;
     async fn load(
-        & self,
-        reader: & mut dyn Reader,
-        _settings: & (),
-        #[allow(unused_variables)]
-        load_context: & mut LoadContext<'_>,
+        &self,
+        reader: &mut dyn Reader,
+        _settings: &(),
+        #[allow(unused_variables)] load_context: &mut LoadContext<'_>,
     ) -> Result<Self::Asset, Self::Error> {
         let mut bytes = Vec::new();
         reader.read_to_end(&mut bytes).await?;
