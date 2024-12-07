@@ -32,14 +32,11 @@ fn main() {
         .run();
 }
 
-fn setup(commands: &mut Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<StandardMaterial>>) {
-    commands
-        .spawn(PbrBundle {
-            mesh: asset_server.load("disc.stl"),
-            material: materials.add(Color::rgb(0.9, 0.4, 0.3).into()),
-            ..Default::default()
-        })
-        // ...
+fn setup(commands: Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<StandardMaterial>>) {
+    commands.spawn((
+        Mesh3d(asset_server.load("disc.stl")),
+        MeshMaterial3d(Color::rgb(0.9, 0.4, 0.3).into()),
+    ));
 }
 ```
 
