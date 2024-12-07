@@ -2,7 +2,7 @@ use std::io::Cursor;
 use thiserror::Error;
 
 use bevy::{
-    asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
+    asset::{io::Reader, AssetLoader, LoadContext},
     prelude::*,
     render::{
         mesh::{Indices, Mesh, VertexAttributeValues},
@@ -26,11 +26,11 @@ impl AssetLoader for StlLoader {
     type Asset = Mesh;
     type Settings = ();
     type Error = StlError;
-    async fn load<'a>(
-        &'a self,
-        reader: &'a mut Reader<'_>,
-        _settings: &'a (),
-        #[allow(unused)] load_context: &'a mut LoadContext<'_>,
+    async fn load(
+        &self,
+        reader: &mut dyn Reader,
+        _settings: &(),
+        #[allow(unused_variables)] load_context: &mut LoadContext<'_>,
     ) -> Result<Self::Asset, Self::Error> {
         let mut bytes = Vec::new();
         reader.read_to_end(&mut bytes).await?;
@@ -102,7 +102,6 @@ fn stl_to_wireframe_mesh(stl: &stl_io::IndexedMesh) -> Mesh {
     let mut indices = Vec::with_capacity(stl.faces.len() * 3);
     let normals = vec![[1.0, 0.0, 0.0]; stl.vertices.len()];
     let uvs = vec![[0.0, 0.0]; stl.vertices.len()];
-
     for face in &stl.faces {
         for j in 0..3 {
             indices.push(face.vertices[j] as u32);

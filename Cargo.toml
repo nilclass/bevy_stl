@@ -1,6 +1,6 @@
 [package]
 name = "bevy_stl"
-version = "0.14.0"
+version = "0.15.0"
 authors = ["Niklas Cathor <niklas.cathor@gmx.de>"]
 edition = "2021"
 license = "MIT"
@@ -12,25 +12,26 @@ resolver = "2"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { version = "0.14", default-features = false, features = [
+bevy = { version = "0.15", default-features = false, features = [
     "bevy_asset",
     "bevy_render",
 ] }
-thiserror = "1.0"
-stl_io = "0.7.0"
+thiserror = "2.0"
+stl_io = "0.8.3"
 
 [dev-dependencies]
-bevy = { version = "0.14", default-features = false, features = [
+bevy = { version = "0.15", default-features = false, features = [
     "bevy_asset",
     "bevy_core_pipeline",
     "bevy_pbr",
     "bevy_winit",
+    "bevy_window",
     "tonemapping_luts",
     "x11",
 ] }
 
 [features]
-default = []
+default = ["wireframe"]
 
 # Along with the triangle mesh, generate an additional wireframe mesh (a PrimitiveTopology::LineList).
 # The wireframe mesh can be accessed by `asset_server.load("my-model.stl#wireframe")`.
