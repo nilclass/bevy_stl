@@ -1,6 +1,7 @@
-use bevy::{prelude::*, utils::Duration};
+use bevy::prelude::*;
 use bevy_stl::StlPlugin;
 use core::f32::consts::PI;
+use std::time::Duration;
 
 fn main() {
     App::new()
