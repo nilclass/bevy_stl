@@ -46,7 +46,7 @@ impl AssetLoader for StlLoader {
     }
 
     fn extensions(&self) -> &[&str] {
-        static EXTENSIONS: &[&str] = &["stl"];
+        static EXTENSIONS: &[&str] = &["stl", "STL"];
         EXTENSIONS
     }
 }
