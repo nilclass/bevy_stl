@@ -20,7 +20,7 @@ impl Plugin for StlPlugin {
 }
 
 #[derive(Default)]
-struct StlLoader;
+pub struct StlLoader;
 
 impl AssetLoader for StlLoader {
     type Asset = Mesh;
@@ -52,7 +52,7 @@ impl AssetLoader for StlLoader {
 }
 
 #[derive(Error, Debug)]
-enum StlError {
+pub enum StlError {
     #[error("Failed to load STL")]
     Io(#[from] std::io::Error),
 }
