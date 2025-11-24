@@ -2,13 +2,10 @@ use std::io::Cursor;
 use thiserror::Error;
 
 use bevy::{
-    asset::{io::Reader, AssetLoader, LoadContext},
+    asset::{io::Reader, AssetLoader, LoadContext, RenderAssetUsages},
+    mesh::{Indices, Mesh, VertexAttributeValues},
     prelude::*,
-    render::{
-        mesh::{Indices, Mesh, VertexAttributeValues},
-        render_asset::RenderAssetUsages,
-        render_resource::PrimitiveTopology,
-    },
+    render::render_resource::PrimitiveTopology,
 };
 
 pub struct StlPlugin;
@@ -38,9 +35,12 @@ impl AssetLoader for StlLoader {
         let stl = stl_io::read_stl(&mut reader)?;
 
         #[cfg(feature = "wireframe")]
-        load_context.labeled_asset_scope("wireframe".to_string(), |_load_context| {
-            stl_to_wireframe_mesh(&stl)
-        });
+        load_context
+            .labeled_asset_scope::<_, ()>("wireframe".to_string(), |_load_context| {
+                let mesh = stl_to_wireframe_mesh(&stl);
+                Ok(mesh)
+            })
+            .unwrap();
 
         Ok(stl_to_triangle_mesh(&stl))
     }
