@@ -5,6 +5,7 @@ use bevy::{
     asset::{io::Reader, AssetLoader, LoadContext, RenderAssetUsages},
     mesh::{Indices, Mesh, VertexAttributeValues},
     prelude::*,
+    reflect::TypePath,
     render::render_resource::PrimitiveTopology,
 };
 
@@ -16,7 +17,7 @@ impl Plugin for StlPlugin {
     }
 }
 
-#[derive(Default)]
+#[derive(Default, TypePath)]
 pub struct StlLoader;
 
 impl AssetLoader for StlLoader {
